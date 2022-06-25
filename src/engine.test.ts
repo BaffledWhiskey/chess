@@ -307,14 +307,29 @@ describe('test generateDiagonalPath', (): void => {
 });
 
 describe('test calculateValidBishopMoves', (): void => {
-    test('get all valid moves for bishop at 3,3 on empty board', (): void => {
-        expect(calculateValidPawnMoves({ x: 3, y: 3 }, {
+    test('get all valid moves for white bishop at 3,3 on empty board', (): void => {
+        expect(calculateValidBishopMoves({ x: 3, y: 3 }, {
             ...defaultState,
             board: emptyBoard
-        })).toIncludeAllMembers([
+        }, 8)).toIncludeAllMembers([
             { x: 2, y: 2 }, { x: 1, y: 1 }, { x: 0, y: 0 },// dl
             { x: 4, y: 4 }, { x: 5, y: 5 }, { x: 6, y: 6 }, { x: 7, y: 7 }, //ur
-            
+            { x: 2, y: 4 }, { x: 1, y: 5 }, { x: 0, y: 6 }, //ul
+            { x: 4, y: 2 }, { x: 5, y: 1 }, { x: 6, y: 0 } // dr
+        ]);
+    });
+
+    test('get all valid moves for white bishop at 3,3 on board with hostile pawn on 5,5', (): void => {
+        const board = emptyBoard;
+        board[5][5] = 1;
+        expect(calculateValidBishopMoves({ x: 3, y: 3 }, {
+            ...defaultState,
+            board
+        }, 8)).toIncludeAllMembers([
+            { x: 2, y: 2 }, { x: 1, y: 1 }, { x: 0, y: 0 },// dl
+            { x: 4, y: 4 }, { x: 5, y: 5 }, //ur
+            { x: 2, y: 4 }, { x: 1, y: 5 }, { x: 0, y: 6 }, //ul
+            { x: 4, y: 2 }, { x: 5, y: 1 }, { x: 6, y: 0 } // dr
         ]);
     });
 });

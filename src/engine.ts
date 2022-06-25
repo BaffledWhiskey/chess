@@ -204,9 +204,13 @@ export const calculateValidBishopMoves = (coord: Coord, state: State, colour: nu
             return emptySpace(coord, state);
         })
         ) {
-            validMoves.push(move);
+            validMoves.push({ ...move });
         } else {
-            checkTargetCoordForHostilePiece(move, state, colour) ? validMoves.push(move) : null
+            move.y >= 0
+            && move.y < 8
+            && move.x >= 0
+            && move.x < 8
+            && checkTargetCoordForHostilePiece(move, state, colour) ? validMoves.push({ ...move }) : null
             break;
         }
     };
@@ -219,9 +223,13 @@ export const calculateValidBishopMoves = (coord: Coord, state: State, colour: nu
             return emptySpace(coord, state);
         })
         ) {
-            validMoves.push(move);
+            validMoves.push({ ...move });
         } else {
-            checkTargetCoordForHostilePiece(move, state, colour) ? validMoves.push(move) : null
+            move.y >= 0
+            && move.y < 8
+            && move.x >= 0
+            && move.x < 8
+            && checkTargetCoordForHostilePiece(move, state, colour) ? validMoves.push({ ...move }) : null
             break;
         }
     }
@@ -234,9 +242,13 @@ export const calculateValidBishopMoves = (coord: Coord, state: State, colour: nu
             return emptySpace(coord, state);
             })
         ) {
-            validMoves.push(move);
+            validMoves.push({ ...move });
         } else {
-            checkTargetCoordForHostilePiece(move, state, colour) ? validMoves.push(move) : null
+            move.y >= 0
+            && move.y < 8
+            && move.x >= 0
+            && move.x < 8
+            && checkTargetCoordForHostilePiece(move, state, colour) ? validMoves.push({ ...move }) : null
             break;
         }
     }
@@ -249,9 +261,13 @@ export const calculateValidBishopMoves = (coord: Coord, state: State, colour: nu
             return emptySpace(coord, state);
             })
         ) {
-            validMoves.push(move);
+            validMoves.push({ ...move });
         } else {
-            checkTargetCoordForHostilePiece(move, state, colour) ? validMoves.push(move) : null
+            move.y >= 0
+            && move.y < 8
+            && move.x >= 0
+            && move.x < 8
+            && checkTargetCoordForHostilePiece(move, state, colour) ? validMoves.push({ ...move }) : null
             break;
         }
     }
