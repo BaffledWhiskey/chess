@@ -1,0 +1,24 @@
+{
+  "name": "chess",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "build": "tsc",
+  "scripts": {
+    "test": "jest --coverage",
+    "build": "tsc"
+  },
+  "author": "Max Lloyd (private)",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "typescript": "^4.7.4"
+  },
+  "devDependencies": {
+    "@types/jest": "^28.1.3",
+    "eslint": "^8.18.0",
+    "jest": "^28.1.1",
+    "jest-extended": "^2.0.0",
+    "prettier": "^2.7.1",
+    "ts-jest": "^28.0.5"
+  }
+}
