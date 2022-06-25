@@ -5,7 +5,7 @@
   "main": "index.js",
   "build": "tsc",
   "scripts": {
-    "test": "jest --coverage",
+    "test": "jest --coverage --verbose",
     "build": "tsc"
   },
   "author": "Max Lloyd (private)",

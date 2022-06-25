@@ -274,6 +274,39 @@ export const calculateValidBishopMoves = (coord: Coord, state: State, colour: nu
     return validMoves;
 }
 
+
+export const calculateValidKnightMoves = (coord: Coord, state: State, colour: number): Coord[] => {
+    //Knight moves are L shaped - 2 in a direction and 1 at a right angle
+
+    const validMoves = [];
+
+    const upRight = { x: coord.x + 1, y: coord.y + 2 };
+    const rightUp = { x: coord.x + 2, y: coord.y + 1 };
+
+    const upLeft = { x: coord.x - 1, y: coord.y + 2 };
+    const leftUp = { x: coord.x - 2, y: coord.y + 1 };
+
+    const downRight = { x: coord.x + 1, y: coord.y - 2 };
+    const rightDown = { x: coord.x + 2, y: coord.y - 1 };
+
+    const downLeft = { x: coord.x - 1, y: coord.y - 2 };
+    const leftDown = { x: coord.x - 2, y: coord.y - 1 };
+
+    emptySpace(upRight, state) || checkTargetCoordForHostilePiece(upRight, state, colour) ? validMoves.push(upRight) : null;
+    emptySpace(rightUp, state) || checkTargetCoordForHostilePiece(rightUp, state, colour) ? validMoves.push(rightUp) : null;
+
+    emptySpace(upLeft, state) || checkTargetCoordForHostilePiece(upLeft, state, colour) ? validMoves.push(upLeft) : null;
+    emptySpace(leftUp, state) || checkTargetCoordForHostilePiece(leftUp, state, colour) ? validMoves.push(leftUp) : null;
+
+    emptySpace(downRight, state) || checkTargetCoordForHostilePiece(downRight, state, colour) ? validMoves.push(downRight) : null;
+    emptySpace(rightDown, state) || checkTargetCoordForHostilePiece(rightDown, state, colour) ? validMoves.push(rightDown) : null;
+
+    emptySpace(downLeft, state) || checkTargetCoordForHostilePiece(downLeft, state, colour) ? validMoves.push(downLeft) : null;
+    emptySpace(leftDown, state) || checkTargetCoordForHostilePiece(leftDown, state, colour) ? validMoves.push(leftDown) : null;
+
+    return validMoves;
+}
+
 export const calculateValidMoves = (piece: number, coord: Coord, state: State): Coord[] => {
     return [{x:1,y:1}]
 }

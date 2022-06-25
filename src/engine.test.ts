@@ -1,5 +1,5 @@
 import 'jest-extended';
-import { calculateValidBishopMoves, calculateValidPawnMoves, calculateValidRookMoves, checkTargetCoordForHostilePiece, emptySpace, generateDiagonalPath, generateStraightPath } from "./engine"
+import { calculateValidBishopMoves, calculateValidKnightMoves, calculateValidPawnMoves, calculateValidRookMoves, checkTargetCoordForHostilePiece, emptySpace, generateDiagonalPath, generateStraightPath } from "./engine"
 import { State } from "./fenEncoding";
 
 
@@ -330,6 +330,19 @@ describe('test calculateValidBishopMoves', (): void => {
             { x: 4, y: 4 }, { x: 5, y: 5 }, //ur
             { x: 2, y: 4 }, { x: 1, y: 5 }, { x: 0, y: 6 }, //ul
             { x: 4, y: 2 }, { x: 5, y: 1 }, { x: 6, y: 0 } // dr
+        ]);
+    });
+});
+
+
+describe('test calculateValidKnightMoves', (): void => {
+    test('check valid moves correct for white knight on empty board at 4,4', (): void => {
+        expect(calculateValidKnightMoves({ x: 4, y: 4 }, {
+            ...defaultState,
+            board: emptyBoard
+        }, 8)).toIncludeAllMembers([
+            { x: 6, y: 5 }, { x: 5, y: 6 }, { x: 3, y: 6 }, { x: 2, y: 5 },
+            { x: 3, y: 2 }, { x: 2, y: 3 }, { x: 5, y: 2 }, { x: 6, y: 3 }
         ]);
     });
 });
