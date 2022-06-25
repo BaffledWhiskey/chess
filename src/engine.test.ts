@@ -1,5 +1,5 @@
 import 'jest-extended';
-import { calculateValidPawnMoves, calculateValidRookMoves, checkTargetCoordForHostilePiece, emptySpace, generateDiagonalPath, generateStraightPath } from "./engine"
+import { calculateValidBishopMoves, calculateValidPawnMoves, calculateValidRookMoves, checkTargetCoordForHostilePiece, emptySpace, generateDiagonalPath, generateStraightPath } from "./engine"
 import { State } from "./fenEncoding";
 
 
@@ -293,4 +293,28 @@ describe('test generateDiagonalPath', (): void => {
         ]);
     });
 
+    test('generates diagonal path between 4,4 and 1,7', (): void => {
+        expect(generateDiagonalPath({ x: 4, y: 4 }, { x: 1, y: 7 })).toEqual([
+            { x: 3, y: 5 }, { x: 2, y: 6 }, { x: 1, y: 7 }
+        ]);
+    });
+
+    test('generates diagonal path between 4,4 and 7,1', (): void => {
+        expect(generateDiagonalPath({ x: 4, y: 4 }, { x: 7, y: 1 })).toEqual([
+            { x: 5, y: 3 }, { x: 6, y: 2 }, { x: 7, y: 1 }
+        ]);
+    });
+});
+
+describe('test calculateValidBishopMoves', (): void => {
+    test('get all valid moves for bishop at 3,3 on empty board', (): void => {
+        expect(calculateValidPawnMoves({ x: 3, y: 3 }, {
+            ...defaultState,
+            board: emptyBoard
+        })).toIncludeAllMembers([
+            { x: 2, y: 2 }, { x: 1, y: 1 }, { x: 0, y: 0 },// dl
+            { x: 4, y: 4 }, { x: 5, y: 5 }, { x: 6, y: 6 }, { x: 7, y: 7 }, //ur
+            
+        ]);
+    });
 });
