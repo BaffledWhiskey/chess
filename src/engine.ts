@@ -192,6 +192,13 @@ export const generateDiagonalPath = (fromCoord: Coord, toCoord: Coord) => {
     return path;
 }
 
+export const checkBounds = (coord: Coord): boolean => {
+    return coord.y >= 0
+        && coord.y < 8
+        && coord.x >= 0
+        && coord.x < 8;
+}
+
 export const calculateValidBishopMoves = (coord: Coord, state: State, colour: number) => {
     //x pattern requires reaching out diagonally in all directions
     const validMoves = [];
@@ -206,10 +213,7 @@ export const calculateValidBishopMoves = (coord: Coord, state: State, colour: nu
         ) {
             validMoves.push({ ...move });
         } else {
-            move.y >= 0
-            && move.y < 8
-            && move.x >= 0
-            && move.x < 8
+            checkBounds(move)
             && checkTargetCoordForHostilePiece(move, state, colour) ? validMoves.push({ ...move }) : null
             break;
         }
@@ -225,10 +229,7 @@ export const calculateValidBishopMoves = (coord: Coord, state: State, colour: nu
         ) {
             validMoves.push({ ...move });
         } else {
-            move.y >= 0
-            && move.y < 8
-            && move.x >= 0
-            && move.x < 8
+            checkBounds(move)
             && checkTargetCoordForHostilePiece(move, state, colour) ? validMoves.push({ ...move }) : null
             break;
         }
@@ -244,10 +245,7 @@ export const calculateValidBishopMoves = (coord: Coord, state: State, colour: nu
         ) {
             validMoves.push({ ...move });
         } else {
-            move.y >= 0
-            && move.y < 8
-            && move.x >= 0
-            && move.x < 8
+            checkBounds(move)
             && checkTargetCoordForHostilePiece(move, state, colour) ? validMoves.push({ ...move }) : null
             break;
         }
@@ -263,10 +261,7 @@ export const calculateValidBishopMoves = (coord: Coord, state: State, colour: nu
         ) {
             validMoves.push({ ...move });
         } else {
-            move.y >= 0
-            && move.y < 8
-            && move.x >= 0
-            && move.x < 8
+            checkBounds(move)
             && checkTargetCoordForHostilePiece(move, state, colour) ? validMoves.push({ ...move }) : null
             break;
         }
@@ -292,17 +287,33 @@ export const calculateValidKnightMoves = (coord: Coord, state: State, colour: nu
     const downLeft = { x: coord.x - 1, y: coord.y - 2 };
     const leftDown = { x: coord.x - 2, y: coord.y - 1 };
 
-    emptySpace(upRight, state) || checkTargetCoordForHostilePiece(upRight, state, colour) ? validMoves.push(upRight) : null;
-    emptySpace(rightUp, state) || checkTargetCoordForHostilePiece(rightUp, state, colour) ? validMoves.push(rightUp) : null;
+    checkBounds(upRight) &&
+        (emptySpace(upRight, state)
+            || checkTargetCoordForHostilePiece(upRight, state, colour)) ? validMoves.push(upRight) : null;
+    checkBounds(rightUp) &&
+        (emptySpace(rightUp, state)
+            || checkTargetCoordForHostilePiece(rightUp, state, colour)) ? validMoves.push(rightUp) : null;
 
-    emptySpace(upLeft, state) || checkTargetCoordForHostilePiece(upLeft, state, colour) ? validMoves.push(upLeft) : null;
-    emptySpace(leftUp, state) || checkTargetCoordForHostilePiece(leftUp, state, colour) ? validMoves.push(leftUp) : null;
+    checkBounds(upLeft)
+        && (emptySpace(upLeft, state)
+            || checkTargetCoordForHostilePiece(upLeft, state, colour)) ? validMoves.push(upLeft) : null;
+    checkBounds(leftUp)
+        && (emptySpace(leftUp, state)
+            || checkTargetCoordForHostilePiece(leftUp, state, colour)) ? validMoves.push(leftUp) : null;
 
-    emptySpace(downRight, state) || checkTargetCoordForHostilePiece(downRight, state, colour) ? validMoves.push(downRight) : null;
-    emptySpace(rightDown, state) || checkTargetCoordForHostilePiece(rightDown, state, colour) ? validMoves.push(rightDown) : null;
+    checkBounds(downRight)
+        && (emptySpace(downRight, state)
+            || checkTargetCoordForHostilePiece(downRight, state, colour)) ? validMoves.push(downRight) : null;
+    checkBounds(rightDown)
+        && (emptySpace(rightDown, state)
+            || checkTargetCoordForHostilePiece(rightDown, state, colour)) ? validMoves.push(rightDown) : null;
 
-    emptySpace(downLeft, state) || checkTargetCoordForHostilePiece(downLeft, state, colour) ? validMoves.push(downLeft) : null;
-    emptySpace(leftDown, state) || checkTargetCoordForHostilePiece(leftDown, state, colour) ? validMoves.push(leftDown) : null;
+    checkBounds(downLeft)
+        && (emptySpace(downLeft, state)
+            || checkTargetCoordForHostilePiece(downLeft, state, colour)) ? validMoves.push(downLeft) : null;
+    checkBounds(leftDown)
+        && (emptySpace(leftDown, state)
+            || checkTargetCoordForHostilePiece(leftDown, state, colour)) ? validMoves.push(leftDown) : null;
 
     return validMoves;
 }
