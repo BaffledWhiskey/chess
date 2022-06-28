@@ -1,5 +1,5 @@
 import 'jest-extended';
-import { calculateValidBishopMoves, calculateValidPawnMoves, calculateValidRookMoves, checkTargetCoordForHostilePiece, emptySpace, generateDiagonalPath, generateStraightPath } from "./engine"
+import { calculateValidBishopMoves, calculateValidKnightMoves, calculateValidPawnMoves, calculateValidRookMoves, checkTargetCoordForHostilePiece, emptySpace, generateDiagonalPath, generateStraightPath } from "./engine"
 import { State } from "./fenEncoding";
 
 
@@ -220,6 +220,17 @@ describe('test calc valid rook moves', (): void => {
             { x: 0, y: 1 }, { x: 0, y: 2 }, { x: 0, y: 3 }, { x: 0, y: 4 },
         ]);
     });
+
+    test('white rook in position 4,4 with white pawn in 5,4', (): void => {
+        const board = emptyBoard;
+        board[4][4] = 12;
+        board[4][5] = 9;
+        expect(calculateValidRookMoves({ x: 4, y: 4 }, { ...defaultState, board }, 8)).toIncludeAllMembers([
+            { x: 3, y: 4 }, { x: 2, y: 4 }, { x: 1, y: 4 }, { x: 0, y: 4 },
+            { x: 4, y: 3 }, { x: 4, y: 2 }, { x: 4, y: 1 }, { x: 4, y: 0 },
+            { x: 4, y: 5 }, { x: 4, y: 6 }, { x: 4, y: 7 }
+        ]);
+    });
 });
 
 describe('test checkTargetCoordForHostilePiece', (): void => {
@@ -258,6 +269,15 @@ describe('test checkTargetCoordForHostilePiece', (): void => {
             board,
             enpassantTarget: {x: 7, y: 1}
         }, 0)).toEqual(true);
+    });
+
+    test('returns false when target on 1,1 but lookup on 2,1', (): void => {
+        const board = emptyBoard;
+        expect(checkTargetCoordForHostilePiece({ x: 2, y: 1 }, {
+            ...defaultState,
+            board,
+            enpassantTarget: {x: 1, y: 1}
+        }, 0)).toEqual(false);
     });
 });
 
@@ -330,6 +350,64 @@ describe('test calculateValidBishopMoves', (): void => {
             { x: 4, y: 4 }, { x: 5, y: 5 }, //ur
             { x: 2, y: 4 }, { x: 1, y: 5 }, { x: 0, y: 6 }, //ul
             { x: 4, y: 2 }, { x: 5, y: 1 }, { x: 6, y: 0 } // dr
+        ]);
+    });
+
+    test('get all valid moves for white bishop at 3,3 on board with friendly pawn on 5,5', (): void => {
+        const board = emptyBoard;
+        board[5][5] = 1;
+        expect(calculateValidBishopMoves({ x: 3, y: 3 }, {
+            ...defaultState,
+            board
+        }, 8)).toIncludeAllMembers([
+            { x: 2, y: 2 }, { x: 1, y: 1 }, { x: 0, y: 0 },// dl
+            { x: 4, y: 4 },  //ur
+            { x: 2, y: 4 }, { x: 1, y: 5 }, { x: 0, y: 6 }, //ul
+            { x: 4, y: 2 }, { x: 5, y: 1 }, { x: 6, y: 0 } // dr
+        ]);
+    });
+});
+
+
+describe('test calculateValidKnightMoves', (): void => {
+    test('check valid moves correct for white knight on empty board at 4,4', (): void => {
+        expect(calculateValidKnightMoves({ x: 4, y: 4 }, {
+            ...defaultState,
+            board: emptyBoard
+        }, 8)).toIncludeAllMembers([
+            { x: 6, y: 5 }, { x: 5, y: 6 }, { x: 3, y: 6 }, { x: 2, y: 5 },
+            { x: 3, y: 2 }, { x: 2, y: 3 }, { x: 5, y: 2 }, { x: 6, y: 3 }
+        ]);
+    });
+
+    test('check valid moves correct for white knight on empty board at 0,0', (): void => {
+        expect(calculateValidKnightMoves({ x: 0, y: 0 }, {
+            ...defaultState,
+            board: emptyBoard
+        }, 8)).toIncludeAllMembers([
+            { x: 2, y: 1}, { x: 1, y: 2}
+        ]);
+    });
+
+    test('check valid moves correct for white knight on empty board at 0,0 and hostile pawn on 2,1', (): void => {
+        const board = emptyBoard;
+        board[1][2] = 1;
+        expect(calculateValidKnightMoves({ x: 0, y: 0 }, {
+            ...defaultState,
+            board
+        }, 8)).toIncludeAllMembers([
+            { x: 2, y: 1}, { x: 1, y: 2}
+        ]);
+    });
+
+    test('check valid moves correct for white knight on empty board at 0,0 and friendly pawn on 2,1', (): void => {
+        const board = emptyBoard;
+        board[1][2] = 9;
+        expect(calculateValidKnightMoves({ x: 0, y: 0 }, {
+            ...defaultState,
+            board
+        }, 8)).toIncludeAllMembers([
+            { x: 1, y: 2}
         ]);
     });
 });
